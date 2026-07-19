@@ -5,6 +5,7 @@ import os
 # 导入环境变量
 load_dotenv()
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+DEEPSEEK_URL = os.getenv("DEEPSEEK_URL")
 
 # 创建模型
 model = init_chat_model(
@@ -12,12 +13,12 @@ model = init_chat_model(
     model_provider="openai",
     configurable_fields=["streaming"],
     config_prefix="my",
-    base_url="https://api.deepseek.com",
+    base_url=DEEPSEEK_URL,
     api_key=DEEPSEEK_API_KEY,
     streaming=False,
     #timeout=...,           超时时间
     #max_retries=...,       最大重试次数
-    #tempurature=...,       温度参数
+    #temperature=...,       温度参数
 )
 
 # 调用
