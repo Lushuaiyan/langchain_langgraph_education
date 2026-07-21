@@ -70,13 +70,11 @@ agent = create_agent(
 请始终使用中文回答
 """,
     # debug=True
-    # 关于debug模式: 并不是改变了输出结果(多了agent运行时的状态快照)
-    # 而是使用另一个管线输出这些'日志', 生产模式不能开启, 会严重拖慢速度
 )
 
 # 测试
-print("="*60)
-question1 = "告诉我北京和上海谁更热?"
+# print("="*60)
+# question1 = "告诉我北京和上海谁更热?"
 
 # answer1 = agent.invoke(input={"messages": [{"role": "user", "content": question1}]})
 # print(answer1["messages"][-1].content)
@@ -93,4 +91,25 @@ question1 = "告诉我北京和上海谁更热?"
 #         print(chunk.content, end="", flush=True)
 
 
-print("="*60)
+# print("="*60)
+
+
+# 多轮对话
+print("多轮对话, 输入quit退出")
+# 定义messages
+messages = []
+while True:
+    user_input = input("你: ").strip()
+    if user_input.lower() == "quit":
+        print("退出成功")
+        break
+    # 将用户的提示词添加到messages中
+    messages.append({"role": "user", "content": user_input})
+    # 调用agent
+    resp = agent.invoke({"messages": messages})
+    # 更新历史信息
+    messages = resp["messages"]
+    # 获取最后一条信息, 作为AI的回复
+    last_message = messages[-1]
+    if last_message.type == "ai":
+        print(f"AI: {last_message.content}\n")
