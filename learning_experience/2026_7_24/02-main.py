@@ -153,7 +153,7 @@ def query_orders(user_id: str)->str:
         result += f"商品: {order['product']}\n"
         result += f"状态: {order['status']}\n"
         result += f"下单时间: {order['date']}\n"
-        result =+ '-'*40 + '\n'
+        result += '-'*40 + '\n'
 
     return result
 
